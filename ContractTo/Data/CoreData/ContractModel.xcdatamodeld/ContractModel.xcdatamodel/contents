@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24512" systemVersion="25C56" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDClient" representedClassName="CDClient" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="invoices" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDInvoice" inverseName="client" inverseEntity="CDInvoice"/>
+    </entity>
+    <entity name="CDInvoice" representedClassName="CDInvoice" syncable="YES" codeGenerationType="class">
+        <attribute name="currencyCode" optional="YES" attributeType="String"/>
+        <attribute name="dueDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="issueDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="number" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="statusRaw" attributeType="String"/>
+        <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDClient" inverseName="invoices" inverseEntity="CDClient"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDInvoiceItem" inverseName="invoice" inverseEntity="CDInvoiceItem"/>
+    </entity>
+    <entity name="CDInvoiceItem" representedClassName="CDInvoiceItem" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="quantity" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="unitPrice" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="invoice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDInvoice" inverseName="items" inverseEntity="CDInvoice"/>
+    </entity>
+    <entity name="CDUserProfile" representedClassName="CDUserProfile" syncable="YES" codeGenerationType="class">
+        <attribute name="countryCode" optional="YES" attributeType="String"/>
+        <attribute name="currencyCode" optional="YES" attributeType="String"/>
+        <attribute name="displayName" optional="YES" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastInvoiceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>
