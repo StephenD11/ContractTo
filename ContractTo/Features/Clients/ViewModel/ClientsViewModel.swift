@@ -10,6 +10,8 @@ import Foundation
 protocol ClientsViewModelProtocol {
     var clients: [Client] { get }
     func loadClients()
+    func addClient()
+    func deleteClient(at index: Int)
 }
 
 final class ClientsViewModel : ClientsViewModelProtocol {
@@ -29,4 +31,26 @@ final class ClientsViewModel : ClientsViewModelProtocol {
             print("❌ Failed to fetch clients: \(error)")
         }
     }
+    
+    func addClient() {
+        do {
+            try repository.createClient(name: "Test Client \(clients.count + 1)", email: nil, address: nil, notes: nil )
+            
+            loadClients()
+        } catch {
+            print("❌ Failed to create client: \(error)")
+        }
+    }
+    
+    func deleteClient(at index: Int) {
+        let client = clients[index]
+        
+        do {
+            try repository.deleteClient(id: client.id)
+            loadClients()
+        } catch {
+            print("❌ Failed to delete client: \(error)")
+        }
+    }
+
 }

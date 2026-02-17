@@ -17,15 +17,15 @@ final class AppCoordinator: Coordinator {
     
     private let coreDataStack: CoreDataStack
     private let clientRepository: ClientRepository
+    private let invoiceRepository: InvoiceRepository
     
     init(window: UIWindow) {
         self.window = window
         self.navigationController = UINavigationController()
         self.coreDataStack = CoreDataStack(modelName: "ContractModel")
         
-        self.clientRepository = CoreDataClientRepository(
-            context: coreDataStack.viewContext
-        )
+        self.clientRepository = CoreDataClientRepository(context: coreDataStack.viewContext)
+        self.invoiceRepository = CoreDataInvoiceRepository(context: coreDataStack.viewContext)
     }
     
     
@@ -54,7 +54,7 @@ final class AppCoordinator: Coordinator {
         
         let dashboardCoordinator = DashboardCoordinator(navigationController: dashboardNav)
         let clientsCoordinator = ClientsCoordinator(navigationController: clientsNav, clientRepository: clientRepository)
-        let invoicesCoordinator = InvoicesCoordinator(navigationController: invoicesNav)
+        let invoicesCoordinator = InvoicesCoordinator(navigationController: invoicesNav, invoiceRepository: invoiceRepository, clientRepository: clientRepository)
         let settingsCoordinator = SettingsCoordinator(navigationController: settingsNav)
         
         childCoordinators = [ dashboardCoordinator, clientsCoordinator, invoicesCoordinator,settingsCoordinator ]

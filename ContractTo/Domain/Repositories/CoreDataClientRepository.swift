@@ -18,6 +18,7 @@ final class CoreDataClientRepository : ClientRepository {
     
     func createClient(name: String, email: String?, address: String?, notes: String?) throws {
         
+        let now = Date()
         let cdClient = CDClient(context: context)
         
         cdClient.id = UUID()
@@ -25,7 +26,8 @@ final class CoreDataClientRepository : ClientRepository {
         cdClient.email = email
         cdClient.address = address
         cdClient.notes = notes
-        cdClient.createdAt = Date()
+        cdClient.createdAt = now
+        cdClient.updatedAt = now
         
         try context.save()
     }

@@ -23,7 +23,19 @@ final class ClientsCoordinator: Coordinator {
         let viewModel = ClientsViewModel(repository: clientRepository)
         let vc = ClientsViewController(viewModel: viewModel)
         vc.title = "Clients"
+        
+        vc.onClientSelected = { [weak self] client in
+            self?.showDetails(for: client)
+        }
 
         navigationController.setViewControllers([vc], animated: false)
+    }
+    
+    private func showDetails(for client: Client) {
+        
+        let detailsVC = ClientDetailsViewController(client: client)
+        detailsVC.title = client.name
+        
+        navigationController.pushViewController(detailsVC, animated: true)
     }
 }

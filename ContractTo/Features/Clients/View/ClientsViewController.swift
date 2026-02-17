@@ -10,7 +10,10 @@ import UIKit
 final class ClientsViewController: BaseViewController {
     
     private let viewModel : ClientsViewModelProtocol
-    private let titleLabel = UILabel().forAutoLayout()
+    private let tableView = UITableView(frame: .zero, style: .plain).forAutoLayout()
+    
+    var onClientSelected: ((Client) -> Void)?
+    
     
     init(viewModel: ClientsViewModelProtocol) {
         self.viewModel = viewModel
@@ -25,16 +28,24 @@ final class ClientsViewController: BaseViewController {
         super.viewDidLoad()
         
         viewModel.loadClients()
+        tableView.reloadData()
+
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
+    
     
     override func setupViews() {
         super.setupViews()
-
-        titleLabel.text = "Clients count: \(viewModel.clients.count)"
-        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
-
-        view.addSubview(titleLabel)
         
+        view.addSubview(tableView)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ClientCell")
+        
+                           
         
     }
 
@@ -42,8 +53,53 @@ final class ClientsViewController: BaseViewController {
         super.setupConstraints()
 
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    @objc private func addTapped() {
+        viewModel.addClient()
+        tableView.reloadData()
+
+    }
+
+}
+
+
+extension ClientsViewController : UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.clients.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath )
+        
+        let client = viewModel.clients[indexPath.row]
+        cell.textLabel?.text = client.name
+        cell.accessoryType = .disclosureIndicator
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedClient = viewModel.clients[indexPath.row]
+        
+        onClientSelected?(selectedClient)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            viewModel.deleteClient(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
