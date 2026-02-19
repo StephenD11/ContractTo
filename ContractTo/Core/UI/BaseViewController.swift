@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
     func setupAppearance() {
         view.backgroundColor = DS.Colors.background
         
-        // Большие заголовки
+        // MARK: Большие заголовки
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

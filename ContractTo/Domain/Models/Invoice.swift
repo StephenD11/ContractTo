@@ -22,4 +22,17 @@ struct Invoice {
     let dueDate: Date
     let status: InvoiceStatus
     let clientId: UUID
+    
+    
+    var computedStatus: InvoiceStatus {
+        if status != .paid && dueDate < Date() {
+            return .overdue
+        }
+        
+        return status
+    }
 }
+
+
+
+

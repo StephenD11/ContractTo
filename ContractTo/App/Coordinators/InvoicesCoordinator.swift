@@ -30,8 +30,22 @@ final class InvoicesCoordinator: Coordinator {
         vc.onAddInvoiceTapped = { [weak self] in
             self?.showClientPicker()
         }
+        
+        vc.onInvoiceSelected = { [weak self] invoice in
+            self?.showDetails(for: invoice)
+        }
 
         navigationController.setViewControllers([vc], animated: false)
+    }
+    
+    private func showDetails(for invoice: Invoice) {
+        
+        let detailsVC = InvoiceDetailsViewController(invoice: invoice,
+                                                         invoiceRepository: invoiceRepository)
+        
+        detailsVC.title = "Invoice #\(invoice.number)"
+
+        navigationController.pushViewController(detailsVC, animated: true)
     }
     
     private func showClientPicker() {
@@ -59,10 +73,11 @@ final class InvoicesCoordinator: Coordinator {
             try invoiceRepository.createInvoice(for: client.id)
 
             navigationController.popViewController(animated: true)
-
-            if let invoicesVC = navigationController.viewControllers.first as? InvoicesViewController {
-                invoicesVC.refresh()
-            }
+            
+//            // MARK: Лишний refresh() оставляю на всякий случай
+//            if let invoicesVC = navigationController.viewControllers.first as? InvoicesViewController {
+//                invoicesVC.refresh()
+//            }
 
         } catch {
             print("❌ Failed to create invoice")

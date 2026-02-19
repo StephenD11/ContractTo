@@ -12,10 +12,10 @@ final class CoreDataStack {
     
     private let modelName : String
     
-    //Главный контейнер Core Data
+    // MARK: Главный контейнер Core Data
     let persistentContainer: NSPersistentContainer
     
-    //Главный контекст (UI)
+    // MARK: Главный контекст (UI)
     var viewContext: NSManagedObjectContext {
         persistentContainer.viewContext
     }
@@ -25,14 +25,14 @@ final class CoreDataStack {
         
         persistentContainer = NSPersistentContainer(name: modelName)
         
-        // Persistent store (SQLite файл)
+        // MARK: Persistent store (SQLite файл)
         persistentContainer.loadPersistentStores { desctiption, error in
             if let error = error {
                 fatalError("❌ Core Data failed to load: \(error)")
             }
         }
         
-        // Настройка контекста
+        // MARK: Настройка контекста
         persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
     }
     

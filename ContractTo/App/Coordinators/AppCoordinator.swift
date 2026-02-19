@@ -32,7 +32,7 @@ final class AppCoordinator: Coordinator {
     
     func start() {
         
-        // NavigationController's
+        // MARK: NavigationController's
         
         let dashboardNav = UINavigationController()
         dashboardNav.navigationBar.prefersLargeTitles = true
@@ -50,7 +50,7 @@ final class AppCoordinator: Coordinator {
         settingsNav.navigationBar.prefersLargeTitles = true
         settingsNav.tabBarItem = UITabBarItem(title: "Settings",image: UIImage(systemName: "gearshape"),tag: 3)
         
-        // Координаторы вкладок
+        // MARK: Координаторы вкладок
         
         let dashboardCoordinator = DashboardCoordinator(navigationController: dashboardNav)
         let clientsCoordinator = ClientsCoordinator(navigationController: clientsNav, clientRepository: clientRepository)

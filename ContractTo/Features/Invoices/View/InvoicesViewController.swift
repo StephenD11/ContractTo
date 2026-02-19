@@ -13,6 +13,7 @@ final class InvoicesViewController: BaseViewController {
     private let tableView = UITableView(frame: .zero, style: .plain).forAutoLayout()
     
     var onAddInvoiceTapped: (() -> Void)?
+    var onInvoiceSelected: ((Invoice) -> Void)?
     
     init(viewModel: InvoicesViewModelProtocol) {
         self.viewModel = viewModel
@@ -25,7 +26,6 @@ final class InvoicesViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.loadInvoices()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
@@ -46,7 +46,7 @@ final class InvoicesViewController: BaseViewController {
         view.addSubview(tableView)
 
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "InvoiceCell")
+        tableView.register(InvoiceTableViewCell.self, forCellReuseIdentifier: InvoiceTableViewCell.reuseId)
 
     }
 
@@ -72,6 +72,8 @@ final class InvoicesViewController: BaseViewController {
         tableView.reloadData()
     }
     
+    
+    
 }
 
 extension InvoicesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -82,25 +84,25 @@ extension InvoicesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "InvoiceCell")
-        
-        let invoice = viewModel.invoices[indexPath.row]
-        cell.textLabel?.text = "Invoice #\(invoice.number)"
-        cell.accessoryType = .disclosureIndicator
-        
-        cell.detailTextLabel?.text = invoice.status.rawValue.capitalized
-        
-        switch invoice.status {
-        case .draft:
-            cell.detailTextLabel?.textColor = .secondaryLabel
-        case .sent:
-            cell.detailTextLabel?.textColor = .systemBlue
-        case .paid:
-            cell.detailTextLabel?.textColor = .systemGreen
-        case .overdue:
-            cell.detailTextLabel?.textColor = .systemRed
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InvoiceTableViewCell.reuseId, for: indexPath) as? InvoiceTableViewCell else {
+            return UITableViewCell()
         }
         
+        
+        let invoice = viewModel.invoices[indexPath.row]
+        cell.configure(with: invoice)
+        cell.accessoryType = .disclosureIndicator
+    
+        
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let invoice = viewModel.invoices[indexPath.row]
+        onInvoiceSelected?(invoice)
     }
 }

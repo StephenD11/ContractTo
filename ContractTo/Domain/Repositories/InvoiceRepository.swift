@@ -15,5 +15,7 @@ protocol InvoiceRepository {
     
     func deleteInvoice(id: UUID) throws
     
+    func updateStatus(id:UUID, status: InvoiceStatus) throws
+    
 }
 

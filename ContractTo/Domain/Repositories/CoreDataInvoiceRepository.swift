@@ -16,7 +16,7 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
     
     func createInvoice(for clientId: UUID) throws {
         
-        //Нахожу клиента
+        // MARK: Нахожу клиента
         let clientRequest: NSFetchRequest<CDClient> = CDClient.fetchRequest()
         clientRequest.predicate = NSPredicate(format: "id == %@", clientId as CVarArg)
         
@@ -24,17 +24,17 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
             throw NSError(domain: "ClientNotFound", code: 404)
         }
         
-        //Создаю новый CDInvoice
+        // MARK: Создаю новый CDInvoice
         let cdInvoice = CDInvoice(context: context)
         
         cdInvoice.id = UUID()
         cdInvoice.number = Int64(Date().timeIntervalSince1970)
         cdInvoice.issueDate = Date()
-        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())
+        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         cdInvoice.statusRaw = InvoiceStatus.draft.rawValue
         cdInvoice.currencyCode = "USD"
         
-        // Устанавливаю relationship
+        // MARK: Устанавливаю relationship
         cdInvoice.client = cdClient
         
         try context.save()
@@ -68,4 +68,19 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
             try context.save()
         }
     }
+    
+    func updateStatus(id: UUID, status: InvoiceStatus) throws {
+        
+        let request: NSFetchRequest<CDInvoice> = CDInvoice.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        guard let invoice = try context.fetch(request).first else {
+            return
+        }
+        
+        invoice.statusRaw = status.rawValue
+        
+        try context.save()
+    }
+    
 }
