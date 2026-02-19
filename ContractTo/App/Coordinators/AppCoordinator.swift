@@ -52,7 +52,7 @@ final class AppCoordinator: Coordinator {
         
         // MARK: Координаторы вкладок
         
-        let dashboardCoordinator = DashboardCoordinator(navigationController: dashboardNav)
+        let dashboardCoordinator = DashboardCoordinator(navigationController: dashboardNav, clientRepository: clientRepository, invoiceRepository: invoiceRepository)
         let clientsCoordinator = ClientsCoordinator(navigationController: clientsNav, clientRepository: clientRepository)
         let invoicesCoordinator = InvoicesCoordinator(navigationController: invoicesNav, invoiceRepository: invoiceRepository, clientRepository: clientRepository)
         let settingsCoordinator = SettingsCoordinator(navigationController: settingsNav)

@@ -8,14 +8,25 @@
 import  Foundation
 
 protocol DashboardViewModelProtocol {
-    var screenTitle: String { get }
+    var stats: DashboardStats? { get }
+    func load()
 }
 
 final class DashboardViewModel: DashboardViewModelProtocol{
     
-    let screenTitle: String
+    private let useCase: CalculateDashboardStatsUseCase
+    private(set) var stats: DashboardStats?
+
+    init(useCase: CalculateDashboardStatsUseCase) {
+        self.useCase = useCase
+    }
     
-    init(screenTitle: String = "Dashboard") {
-        self.screenTitle = screenTitle
+
+    func load() {
+        do {
+            stats = try useCase.execute()
+        } catch {
+            print("❌ Dashboard load error: \(error)")
+        }
     }
 }

@@ -17,5 +17,9 @@ protocol InvoiceRepository {
     
     func updateStatus(id:UUID, status: InvoiceStatus) throws
     
+    func addItem(to invoiceId: UUID, title:String, quantity: Double, unitPrice: Double) throws
+    
+    func fetchItems(for invoiceId : UUID) throws -> [InvoiceItem]
+    
 }
 

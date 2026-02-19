@@ -39,6 +39,10 @@ final class InvoiceTableViewCell : UITableViewCell {
         dueDateLabel.font = DS.Typography.caption()
         dueDateLabel.textColor = DS.Colors.textSecondary
         
+        selectionStyle = .none
+        
+        contentView.backgroundColor = DS.Colors.background
+        
         contentView.addSubview(numberLabel)
         contentView.addSubview(statusLabel)
         contentView.addSubview(dueDateLabel)
@@ -59,6 +63,8 @@ final class InvoiceTableViewCell : UITableViewCell {
             dueDateLabel.leadingAnchor.constraint(equalTo: numberLabel.leadingAnchor),
             dueDateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -DS.Spacing.l)
         ])
+        
+        contentView.layoutMargins = UIEdgeInsets(top: DS.Spacing.s, left: 0, bottom: DS.Spacing.s, right: 0)
     }
     
     func configure(with invoice: Invoice) {

@@ -38,14 +38,14 @@ final class InvoicesViewController: BaseViewController {
     override func setupViews() {
         super.setupViews()
         
-        
-        
         tableView.dataSource = self
         tableView.delegate = self
         
-        view.addSubview(tableView)
-
+        tableView.rowHeight = UITableView.automaticDimension
         
+        view.addSubview(tableView)
+        tableView.estimatedRowHeight = 80
+
         tableView.register(InvoiceTableViewCell.self, forCellReuseIdentifier: InvoiceTableViewCell.reuseId)
 
     }

@@ -30,7 +30,7 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         cdInvoice.id = UUID()
         cdInvoice.number = Int64(Date().timeIntervalSince1970)
         cdInvoice.issueDate = Date()
-        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: -1, to: Date())
+        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())
         cdInvoice.statusRaw = InvoiceStatus.draft.rawValue
         cdInvoice.currencyCode = "USD"
         
@@ -81,6 +81,41 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         invoice.statusRaw = status.rawValue
         
         try context.save()
+    }
+    
+    func addItem(to invoiceId: UUID, title: String, quantity: Double, unitPrice: Double) throws {
+        
+        let invoiceRequest: NSFetchRequest<CDInvoice> = CDInvoice.fetchRequest()
+        invoiceRequest.predicate = NSPredicate(format: "id == %@", invoiceId as CVarArg)
+        
+        guard let cdInvoice = try context.fetch(invoiceRequest).first else {
+            return
+        }
+        
+        let cdItem = CDInvoiceItem(context: context)
+        
+        cdItem.id = UUID()
+        cdItem.title = title
+        cdItem.quantity = quantity
+        cdItem.unitPrice = unitPrice
+        cdItem.invoice = cdInvoice
+        
+        try context.save()
+    }
+    
+    func fetchItems(for invoiceId: UUID) throws -> [InvoiceItem] {
+        
+        let request: NSFetchRequest<CDInvoiceItem> = CDInvoiceItem.fetchRequest()
+        request.predicate = NSPredicate(format: "invoice.id == %@", invoiceId as CVarArg)
+        
+        let results = try context.fetch(request)
+        
+        return results.map { cd in InvoiceItem(
+            id: cd.id ?? UUID(),
+            title: cd.title ?? "",
+            quantity: cd.quantity,
+            unitPrice: cd.unitPrice
+        )}
     }
     
 }

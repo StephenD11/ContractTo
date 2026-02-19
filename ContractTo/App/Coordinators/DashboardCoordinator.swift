@@ -12,12 +12,19 @@ final class DashboardCoordinator : Coordinator {
     var childCoordinators: [Coordinator] = []
     let navigationController: UINavigationController
     
-    init(navigationController: UINavigationController) {
+    private let clientRepository: ClientRepository
+    private let invoiceRepository: InvoiceRepository
+    
+    init(navigationController: UINavigationController, clientRepository: ClientRepository, invoiceRepository: InvoiceRepository) {
         self.navigationController = navigationController
+        self.clientRepository = clientRepository
+        self.invoiceRepository = invoiceRepository
     }
     
     func start () {
-        let viewModel = DashboardViewModel()
+        let useCase = DefaultCalculateDashboardStatsUseCase(clientRepository: clientRepository, invoiceRepository: invoiceRepository)
+        let viewModel = DashboardViewModel(useCase: useCase)
+        
         let vc = DashboardViewController(viewModel: viewModel)
         vc.title = "Dashboard"
         
