@@ -105,4 +105,16 @@ extension InvoicesViewController: UITableViewDataSource, UITableViewDelegate {
         let invoice = viewModel.invoices[indexPath.row]
         onInvoiceSelected?(invoice)
     }
+    
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+
+        if editingStyle == .delete {
+
+            viewModel.deleteInvoice(at: indexPath.row)
+
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }

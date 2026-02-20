@@ -13,6 +13,9 @@ protocol InvoiceDetailsViewModelProtocol {
     
     func loadItems()
     func addItem(title:String, quantity: Double, unitPrice: Double)
+    
+    var subtotal: Double { get }
+    
 }
 
 final class InvoiceDetailsViewModel: InvoiceDetailsViewModelProtocol {
@@ -22,9 +25,15 @@ final class InvoiceDetailsViewModel: InvoiceDetailsViewModelProtocol {
     
     private(set) var items: [InvoiceItem] = []
     
-    init(invoice: Invoice, repository: InvoiceRepository) {
+    var subtotal: Double { calculateTotalUseCase.execute(items: items) }
+    
+    private let calculateTotalUseCase: CalculateInvoiceTotalUseCase
+
+    
+    init(invoice: Invoice, repository: InvoiceRepository, calculateTotalUseCase: CalculateInvoiceTotalUseCase) {
         self.invoice = invoice
         self.repository = repository
+        self.calculateTotalUseCase = calculateTotalUseCase
     }
     
     func loadItems() {

@@ -10,6 +10,7 @@ import Foundation
 protocol InvoicesViewModelProtocol {
     var invoices : [Invoice] { get }
     func loadInvoices()
+    func deleteInvoice(at index: Int)
 }
 
 final class InvoicesViewModel: InvoicesViewModelProtocol {
@@ -27,6 +28,18 @@ final class InvoicesViewModel: InvoicesViewModelProtocol {
             invoices = try repository.fetchInvoices()
         } catch {
             print("❌ Failed to fetch invoices: \(error)")
+        }
+    }
+    
+    func deleteInvoice(at index: Int) {
+
+        let invoice = invoices[index]
+
+        do {
+            try repository.deleteInvoice(id: invoice.id)
+            loadInvoices()
+        } catch {
+            print("❌ Failed to delete invoice")
         }
     }
     

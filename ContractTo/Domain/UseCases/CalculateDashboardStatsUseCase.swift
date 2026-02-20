@@ -16,10 +16,16 @@ final class DefaultCalculateDashboardStatsUseCase: CalculateDashboardStatsUseCas
     
     private let clientRepository: ClientRepository
     private let invoiceRepository: InvoiceRepository
+    private let calculateTotalUseCase: CalculateInvoiceTotalUseCase
     
-    init(clientRepository: ClientRepository, invoiceRepository: InvoiceRepository) {
+    
+    
+    init(clientRepository: ClientRepository, invoiceRepository: InvoiceRepository, calculateTotalUseCase: CalculateInvoiceTotalUseCase) {
+        
         self.clientRepository = clientRepository
         self.invoiceRepository = invoiceRepository
+        self.calculateTotalUseCase = calculateTotalUseCase
+
     }
     
     func execute() throws -> DashboardStats {
@@ -27,15 +33,33 @@ final class DefaultCalculateDashboardStatsUseCase: CalculateDashboardStatsUseCas
         let clients = try clientRepository.fetchClients()
         let invoices = try invoiceRepository.fetchInvoices()
         
-        let clientsCount = clients.count
-        let invoicesCount = invoices.count
+        var totalRevenue: Double = 0
+        var outstandingAmount: Double = 0
+        var overdueAmount: Double = 0
         
-        let unpaidCount = invoices.filter { inv in inv.computedStatus != .paid }.count
-        let overdueCount = invoices.filter { inv in inv.computedStatus == .overdue }.count
+        for invoice in invoices {
+            
+            let items = try invoiceRepository.fetchItems(for: invoice.id)
+            let total = calculateTotalUseCase.execute(items: items)
+            
+            switch invoice.computedStatus {
+            case .paid:
+                totalRevenue += total
+            case .overdue:
+                overdueAmount += total
+            default:
+                outstandingAmount += total
+            }
+        }
         
-        return DashboardStats( clientsCount: clientsCount,
-                               invoicesCount: invoicesCount,
-                               unpaidCount: unpaidCount,
-                               overdueCount: overdueCount)
+        return DashboardStats(
+            clientsCount: clients.count,
+            invoicesCount: invoices.count,
+            unpaidCount: invoices.filter { $0.computedStatus != .paid }.count,
+            overdueCount: invoices.filter { $0.computedStatus == .overdue }.count,
+            totalRevenue: totalRevenue,
+            outstandingAmount: outstandingAmount,
+            overdueAmount: overdueAmount
+        )
     }
 }

@@ -30,7 +30,7 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         cdInvoice.id = UUID()
         cdInvoice.number = Int64(Date().timeIntervalSince1970)
         cdInvoice.issueDate = Date()
-        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())
+        cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: 2, to: Date())
         cdInvoice.statusRaw = InvoiceStatus.draft.rawValue
         cdInvoice.currencyCode = "USD"
         

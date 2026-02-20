@@ -7,14 +7,7 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		FDD3A5232F3F8811004A6CD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FDD3A5042F3F8810004A6CD3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FDD3A50B2F3F8810004A6CD3;
-			remoteInfo = ContractTo;
-		};
-		FDD3A52D2F3F8811004A6CD3 /* PBXContainerItemProxy */ = {
+		FD60D7C72F4885B20018BBA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FDD3A5042F3F8810004A6CD3 /* Project object */;
 			proxyType = 1;
@@ -24,33 +17,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FDBFF0052F48811C00127F59 /* ContractToTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContractToTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD3A50C2F3F8810004A6CD3 /* ContractTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContractTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDD3A5222F3F8811004A6CD3 /* ContractToTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContractToTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FDD3A52C2F3F8811004A6CD3 /* ContractToUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContractToUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		FDAF6EB32F3F8B9B00163C66 /* Exceptions for "ContractTo" folder in "ContractToTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ContractToTests/ContractToTests.swift,
-			);
-			target = FDD3A5212F3F8811004A6CD3 /* ContractToTests */;
-		};
-		FDAF6EB92F3F8B9D00163C66 /* Exceptions for "ContractTo" folder in "ContractToUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ContractToUITests/ContractToUITests.swift,
-				ContractToUITests/ContractToUITestsLaunchTests.swift,
-			);
-			target = FDD3A52B2F3F8811004A6CD3 /* ContractToUITests */;
-		};
 		FDD3A5342F3F8811004A6CD3 /* Exceptions for "ContractTo" folder in "ContractTo" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ContractToTests/ContractToTests.swift,
-				ContractToUITests/ContractToUITests.swift,
-				ContractToUITests/ContractToUITestsLaunchTests.swift,
 				Info.plist,
 			);
 			target = FDD3A50B2F3F8810004A6CD3 /* ContractTo */;
@@ -58,12 +32,15 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		FDBFF0062F48811C00127F59 /* ContractToTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ContractToTests;
+			sourceTree = "<group>";
+		};
 		FDD3A50E2F3F8810004A6CD3 /* ContractTo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				FDD3A5342F3F8811004A6CD3 /* Exceptions for "ContractTo" folder in "ContractTo" target */,
-				FDAF6EB32F3F8B9B00163C66 /* Exceptions for "ContractTo" folder in "ContractToTests" target */,
-				FDAF6EB92F3F8B9D00163C66 /* Exceptions for "ContractTo" folder in "ContractToUITests" target */,
 			);
 			path = ContractTo;
 			sourceTree = "<group>";
@@ -71,21 +48,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FDBFF0022F48811C00127F59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDD3A5092F3F8810004A6CD3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A51F2F3F8811004A6CD3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A5292F3F8811004A6CD3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -99,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				FDD3A50E2F3F8810004A6CD3 /* ContractTo */,
+				FDBFF0062F48811C00127F59 /* ContractToTests */,
 				FDD3A50D2F3F8810004A6CD3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -107,8 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				FDD3A50C2F3F8810004A6CD3 /* ContractTo.app */,
-				FDD3A5222F3F8811004A6CD3 /* ContractToTests.xctest */,
-				FDD3A52C2F3F8811004A6CD3 /* ContractToUITests.xctest */,
+				FDBFF0052F48811C00127F59 /* ContractToTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +86,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FDBFF0042F48811C00127F59 /* ContractToTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDBFF00B2F48811C00127F59 /* Build configuration list for PBXNativeTarget "ContractToTests" */;
+			buildPhases = (
+				FDBFF0012F48811C00127F59 /* Sources */,
+				FDBFF0022F48811C00127F59 /* Frameworks */,
+				FDBFF0032F48811C00127F59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FD60D7C82F4885B20018BBA6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FDBFF0062F48811C00127F59 /* ContractToTests */,
+			);
+			name = ContractToTests;
+			packageProductDependencies = (
+			);
+			productName = ContractToTests;
+			productReference = FDBFF0052F48811C00127F59 /* ContractToTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FDD3A50B2F3F8810004A6CD3 /* ContractTo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FDD3A5352F3F8811004A6CD3 /* Build configuration list for PBXNativeTarget "ContractTo" */;
@@ -138,46 +131,6 @@
 			productReference = FDD3A50C2F3F8810004A6CD3 /* ContractTo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FDD3A5212F3F8811004A6CD3 /* ContractToTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FDD3A53A2F3F8811004A6CD3 /* Build configuration list for PBXNativeTarget "ContractToTests" */;
-			buildPhases = (
-				FDD3A51E2F3F8811004A6CD3 /* Sources */,
-				FDD3A51F2F3F8811004A6CD3 /* Frameworks */,
-				FDD3A5202F3F8811004A6CD3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FDD3A5242F3F8811004A6CD3 /* PBXTargetDependency */,
-			);
-			name = ContractToTests;
-			packageProductDependencies = (
-			);
-			productName = ContractToTests;
-			productReference = FDD3A5222F3F8811004A6CD3 /* ContractToTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		FDD3A52B2F3F8811004A6CD3 /* ContractToUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FDD3A53D2F3F8811004A6CD3 /* Build configuration list for PBXNativeTarget "ContractToUITests" */;
-			buildPhases = (
-				FDD3A5282F3F8811004A6CD3 /* Sources */,
-				FDD3A5292F3F8811004A6CD3 /* Frameworks */,
-				FDD3A52A2F3F8811004A6CD3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FDD3A52E2F3F8811004A6CD3 /* PBXTargetDependency */,
-			);
-			name = ContractToUITests;
-			packageProductDependencies = (
-			);
-			productName = ContractToUITests;
-			productReference = FDD3A52C2F3F8811004A6CD3 /* ContractToUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -188,16 +141,11 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					FDBFF0042F48811C00127F59 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 					FDD3A50B2F3F8810004A6CD3 = {
 						CreatedOnToolsVersion = 26.2;
-					};
-					FDD3A5212F3F8811004A6CD3 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = FDD3A50B2F3F8810004A6CD3;
-					};
-					FDD3A52B2F3F8811004A6CD3 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = FDD3A50B2F3F8810004A6CD3;
 					};
 				};
 			};
@@ -216,28 +164,20 @@
 			projectRoot = "";
 			targets = (
 				FDD3A50B2F3F8810004A6CD3 /* ContractTo */,
-				FDD3A5212F3F8811004A6CD3 /* ContractToTests */,
-				FDD3A52B2F3F8811004A6CD3 /* ContractToUITests */,
+				FDBFF0042F48811C00127F59 /* ContractToTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FDBFF0032F48811C00127F59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDD3A50A2F3F8810004A6CD3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A5202F3F8811004A6CD3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A52A2F3F8811004A6CD3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -247,21 +187,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FDBFF0012F48811C00127F59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FDD3A5082F3F8810004A6CD3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A51E2F3F8811004A6CD3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FDD3A5282F3F8811004A6CD3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -271,19 +204,54 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FDD3A5242F3F8811004A6CD3 /* PBXTargetDependency */ = {
+		FD60D7C82F4885B20018BBA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FDD3A50B2F3F8810004A6CD3 /* ContractTo */;
-			targetProxy = FDD3A5232F3F8811004A6CD3 /* PBXContainerItemProxy */;
-		};
-		FDD3A52E2F3F8811004A6CD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FDD3A50B2F3F8810004A6CD3 /* ContractTo */;
-			targetProxy = FDD3A52D2F3F8811004A6CD3 /* PBXContainerItemProxy */;
+			targetProxy = FD60D7C72F4885B20018BBA6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		FDBFF00C2F48811C00127F59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 998BK8KXXX;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FDBFF00D2F48811C00127F59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 998BK8KXXX;
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FDD3A5362F3F8811004A6CD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -465,93 +433,18 @@
 			};
 			name = Release;
 		};
-		FDD3A53B2F3F8811004A6CD3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 998BK8KXXX;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContractTo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ContractTo";
-			};
-			name = Debug;
-		};
-		FDD3A53C2F3F8811004A6CD3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 998BK8KXXX;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ContractTo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ContractTo";
-			};
-			name = Release;
-		};
-		FDD3A53E2F3F8811004A6CD3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 998BK8KXXX;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ContractTo;
-			};
-			name = Debug;
-		};
-		FDD3A53F2F3F8811004A6CD3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 998BK8KXXX;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.degtiarev.ContractToUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ContractTo;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FDBFF00B2F48811C00127F59 /* Build configuration list for PBXNativeTarget "ContractToTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDBFF00C2F48811C00127F59 /* Debug */,
+				FDBFF00D2F48811C00127F59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FDD3A5072F3F8810004A6CD3 /* Build configuration list for PBXProject "ContractTo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -566,24 +459,6 @@
 			buildConfigurations = (
 				FDD3A5362F3F8811004A6CD3 /* Debug */,
 				FDD3A5372F3F8811004A6CD3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FDD3A53A2F3F8811004A6CD3 /* Build configuration list for PBXNativeTarget "ContractToTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FDD3A53B2F3F8811004A6CD3 /* Debug */,
-				FDD3A53C2F3F8811004A6CD3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FDD3A53D2F3F8811004A6CD3 /* Build configuration list for PBXNativeTarget "ContractToUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FDD3A53E2F3F8811004A6CD3 /* Debug */,
-				FDD3A53F2F3F8811004A6CD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

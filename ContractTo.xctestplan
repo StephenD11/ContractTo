@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "4576F86A-4E3A-41FC-8B5D-87FE48847A93",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ContractTo.xcodeproj",
+        "identifier" : "FDBFF0042F48811C00127F59",
+        "name" : "ContractToTests"
+      }
+    }
+  ],
+  "version" : 1
+}

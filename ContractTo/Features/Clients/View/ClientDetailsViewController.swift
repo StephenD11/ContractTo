@@ -38,5 +38,5 @@ final class ClientDetailsViewController: BaseViewController {
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-    }
+    }       
 }

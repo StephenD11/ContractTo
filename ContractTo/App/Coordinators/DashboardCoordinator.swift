@@ -22,7 +22,11 @@ final class DashboardCoordinator : Coordinator {
     }
     
     func start () {
-        let useCase = DefaultCalculateDashboardStatsUseCase(clientRepository: clientRepository, invoiceRepository: invoiceRepository)
+        
+        let calculateTotalUseCase = DefaultCalculateInvoiceTotalUseCase()
+
+        let useCase = DefaultCalculateDashboardStatsUseCase(clientRepository: clientRepository, invoiceRepository: invoiceRepository,calculateTotalUseCase: calculateTotalUseCase)
+        
         let viewModel = DashboardViewModel(useCase: useCase)
         
         let vc = DashboardViewController(viewModel: viewModel)

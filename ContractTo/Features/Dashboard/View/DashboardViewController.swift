@@ -19,6 +19,10 @@ final class DashboardViewController: BaseViewController {
     private let invoicesLabel = UILabel().forAutoLayout()
     private let unpaidLabel = UILabel().forAutoLayout()
     private let overdueLabel = UILabel().forAutoLayout()
+    
+    private let revenueLabel = UILabel().forAutoLayout()
+    private let outstandingAmountLabel = UILabel().forAutoLayout()
+    private let overdueAmountLabel = UILabel().forAutoLayout()
 
     init(viewModel: DashboardViewModelProtocol) {
         self.viewModel = viewModel
@@ -41,9 +45,9 @@ final class DashboardViewController: BaseViewController {
         stackView.axis = .vertical
         stackView.spacing = DS.Spacing.l
         
-        [clientsLabel, invoicesLabel, unpaidLabel, overdueLabel]
+        [clientsLabel, invoicesLabel, unpaidLabel, overdueLabel, revenueLabel, outstandingAmountLabel, overdueAmountLabel]
             .forEach { label in
-                label.font = DS.Typography.title()
+                label.font = DS.Typography.body()
                 stackView.addArrangedSubview(label)
             }
         
@@ -60,6 +64,15 @@ final class DashboardViewController: BaseViewController {
         ])
     }
     
+    private func formatCurrency(_ value: Double) -> String {
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currencyISOCode
+        formatter.currencyCode = "USD"
+
+        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+    }
+    
     private func refresh() {
         viewModel.load()
 
@@ -69,5 +82,9 @@ final class DashboardViewController: BaseViewController {
         invoicesLabel.text = "Invoices: \(stats.invoicesCount)"
         unpaidLabel.text = "Unpaid: \(stats.unpaidCount)"
         overdueLabel.text = "Overdue: \(stats.overdueCount)"
+        
+        revenueLabel.text = "Revenue: \(formatCurrency(stats.totalRevenue))"
+        outstandingAmountLabel.text = "Outstanding: \(formatCurrency(stats.outstandingAmount))"
+        overdueAmountLabel.text = "Overdue Amount: \(formatCurrency(stats.overdueAmount))"
     }
 }

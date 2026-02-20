@@ -13,4 +13,8 @@ struct DashboardStats {
     let invoicesCount: Int
     let unpaidCount: Int
     let overdueCount: Int
+    
+    let totalRevenue: Double
+    let outstandingAmount: Double
+    let overdueAmount: Double
 }
