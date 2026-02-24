@@ -14,7 +14,7 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         self.context = context
     }
     
-    func createInvoice(for clientId: UUID) throws {
+    func createInvoice(for clientId: UUID, number: Int) throws {
         
         // MARK: Нахожу клиента
         let clientRequest: NSFetchRequest<CDClient> = CDClient.fetchRequest()
@@ -28,7 +28,7 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         let cdInvoice = CDInvoice(context: context)
         
         cdInvoice.id = UUID()
-        cdInvoice.number = Int64(Date().timeIntervalSince1970)
+        cdInvoice.number = Int64(number)
         cdInvoice.issueDate = Date()
         cdInvoice.dueDate = Calendar.current.date(byAdding: .day, value: 2, to: Date())
         cdInvoice.statusRaw = InvoiceStatus.draft.rawValue

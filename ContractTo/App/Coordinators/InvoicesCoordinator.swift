@@ -12,14 +12,17 @@ final class InvoicesCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     let navigationController: UINavigationController
     
+    
     private let invoiceRepository: InvoiceRepository
     private let clientRepository: ClientRepository
+    private let userProfileRepository: UserProfileRepository
 
-    init(navigationController: UINavigationController, invoiceRepository: InvoiceRepository, clientRepository: ClientRepository) {
+    init(navigationController: UINavigationController, invoiceRepository: InvoiceRepository, clientRepository: ClientRepository, userProfileRepository: UserProfileRepository) {
         self.navigationController = navigationController
         
         self.invoiceRepository = invoiceRepository
         self.clientRepository = clientRepository
+        self.userProfileRepository = userProfileRepository
     }
 
     func start() {
@@ -70,7 +73,12 @@ final class InvoicesCoordinator: Coordinator {
     private func createInvoice(for client: Client) {
 
         do {
-            try invoiceRepository.createInvoice(for: client.id)
+            
+            let numberUseCase = DefaultGenerateInvoiceNumberUseCase(profileRepository: userProfileRepository)
+            let nextNumber = try numberUseCase.execute()
+            
+            try invoiceRepository.createInvoice(for: client.id, number: nextNumber)
+
 
             navigationController.popViewController(animated: true)
             

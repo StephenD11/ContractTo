@@ -9,7 +9,7 @@ import Foundation
 
 protocol InvoiceRepository {
     
-    func createInvoice(for clientId: UUID) throws
+    func createInvoice(for clientId: UUID, number: Int) throws
     
     func fetchInvoices() throws -> [Invoice]
     

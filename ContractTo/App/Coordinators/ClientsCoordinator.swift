@@ -13,10 +13,13 @@ final class ClientsCoordinator: Coordinator {
     let navigationController: UINavigationController
     
     private let clientRepository: ClientRepository
+    private let invoiceRepository: InvoiceRepository
 
-    init(navigationController: UINavigationController, clientRepository: ClientRepository) {
+
+    init(navigationController: UINavigationController, clientRepository: ClientRepository, invoiceRepository: InvoiceRepository) {
         self.navigationController = navigationController
         self.clientRepository = clientRepository
+        self.invoiceRepository = invoiceRepository
     }
 
     func start() {
@@ -33,9 +36,36 @@ final class ClientsCoordinator: Coordinator {
     
     private func showDetails(for client: Client) {
         
-        let detailsVC = ClientDetailsViewController(client: client)
-        detailsVC.title = client.name
+        let totalUseCase = DefaultCalculateInvoiceTotalUseCase()
+
         
+        let viewModel = ClientDetailsViewModel(
+            client: client,
+            invoiceRepository: invoiceRepository,
+            calculateTotalUseCase: totalUseCase
+        )
+        
+        let vc = ClientDetailsViewController(viewModel: viewModel)
+        
+        vc.onInvoiceSelected = { [weak self] invoice in
+            self?.showInvoiceDetails(invoice)
+        }
+        
+        vc.title = client.name
+        
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    private func showInvoiceDetails(_ invoice: Invoice) {
+
+        let detailsVC = InvoiceDetailsViewController(
+            invoice: invoice,
+            invoiceRepository: invoiceRepository
+        )
+
+        detailsVC.title = "Invoice #\(invoice.number)"
+
         navigationController.pushViewController(detailsVC, animated: true)
     }
+    
 }

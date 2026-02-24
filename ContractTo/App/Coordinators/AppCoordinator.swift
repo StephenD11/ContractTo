@@ -18,6 +18,7 @@ final class AppCoordinator: Coordinator {
     private let coreDataStack: CoreDataStack
     private let clientRepository: ClientRepository
     private let invoiceRepository: InvoiceRepository
+    private let userProfileRepository: UserProfileRepository
     
     init(window: UIWindow) {
         self.window = window
@@ -26,6 +27,7 @@ final class AppCoordinator: Coordinator {
         
         self.clientRepository = CoreDataClientRepository(context: coreDataStack.viewContext)
         self.invoiceRepository = CoreDataInvoiceRepository(context: coreDataStack.viewContext)
+        self.userProfileRepository = CoreDataUserProfileRepository(context: coreDataStack.viewContext)
     }
     
     
@@ -53,8 +55,8 @@ final class AppCoordinator: Coordinator {
         // MARK: Координаторы вкладок
         
         let dashboardCoordinator = DashboardCoordinator(navigationController: dashboardNav, clientRepository: clientRepository, invoiceRepository: invoiceRepository)
-        let clientsCoordinator = ClientsCoordinator(navigationController: clientsNav, clientRepository: clientRepository)
-        let invoicesCoordinator = InvoicesCoordinator(navigationController: invoicesNav, invoiceRepository: invoiceRepository, clientRepository: clientRepository)
+        let clientsCoordinator = ClientsCoordinator(navigationController: clientsNav, clientRepository: clientRepository, invoiceRepository: invoiceRepository)
+        let invoicesCoordinator = InvoicesCoordinator(navigationController: invoicesNav, invoiceRepository: invoiceRepository, clientRepository: clientRepository, userProfileRepository: userProfileRepository)
         let settingsCoordinator = SettingsCoordinator(navigationController: settingsNav)
         
         childCoordinators = [ dashboardCoordinator, clientsCoordinator, invoicesCoordinator,settingsCoordinator ]

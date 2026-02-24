@@ -28,11 +28,10 @@
         <relationship name="invoice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDInvoice" inverseName="items" inverseEntity="CDInvoice"/>
     </entity>
     <entity name="CDUserProfile" representedClassName="CDUserProfile" syncable="YES" codeGenerationType="class">
-        <attribute name="countryCode" optional="YES" attributeType="String"/>
+        <attribute name="companyName" optional="YES" attributeType="String"/>
         <attribute name="currencyCode" optional="YES" attributeType="String"/>
-        <attribute name="displayName" optional="YES" attributeType="String"/>
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="lastInvoiceNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastInvoiceNumber" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>
