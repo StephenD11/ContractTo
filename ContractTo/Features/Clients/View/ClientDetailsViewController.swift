@@ -20,6 +20,10 @@ final class ClientDetailsViewController: BaseViewController {
     private let totalAmountLabel = UILabel().forAutoLayout()
     
     var onInvoiceSelected: ((Invoice) -> Void)?
+    var onCreateInvoiceTapped: ((Client, @escaping () -> Void) -> Void)?
+    
+    
+    private let createInvoiceButton = UIButton(type: .system).forAutoLayout()
     
     
     init(viewModel: ClientDetailsViewModelProtocol) {
@@ -75,9 +79,15 @@ final class ClientDetailsViewController: BaseViewController {
         headerView.addSubview(emailLabel)
         headerView.addSubview(invoicesCountLabel)
         headerView.addSubview(totalAmountLabel)
-        view.addSubview(headerView)
+        headerView.addSubview(createInvoiceButton)
         
-
+        createInvoiceButton.setTitle("Create Invoice", for: .normal)
+        createInvoiceButton.titleLabel?.font = DS.Typography.title()
+        
+        createInvoiceButton.addTarget(self, action: #selector(createInvoiceTapped), for: .touchUpInside)
+        
+        
+        view.addSubview(headerView)
         view.addSubview(tableView)
         
     }
@@ -106,8 +116,12 @@ final class ClientDetailsViewController: BaseViewController {
             totalAmountLabel.topAnchor.constraint(equalTo: invoicesCountLabel.bottomAnchor, constant: DS.Spacing.s),
             totalAmountLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             totalAmountLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-
-            totalAmountLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -DS.Spacing.l),
+            
+            createInvoiceButton.topAnchor.constraint(equalTo: totalAmountLabel.bottomAnchor, constant: DS.Spacing.m),
+            createInvoiceButton.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            createInvoiceButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -DS.Spacing.l),
+            
+            
             
             tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -123,6 +137,21 @@ final class ClientDetailsViewController: BaseViewController {
         formatter.currencyCode = "USD"
 
         return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+    }
+    
+    @objc private func createInvoiceTapped() {
+        onCreateInvoiceTapped?(viewModel.client, { [weak self] in
+            self?.reloadScreen()
+        })
+    }
+    
+    private func reloadScreen() {
+        viewModel.load()
+        tableView.reloadData()
+
+        // если у тебя метрики на экране есть:
+        invoicesCountLabel.text = "Invoices: \(viewModel.invoicesCount)"
+        totalAmountLabel.text = "Total: \(formatCurrency(viewModel.totalAmount))"
     }
 }
 
@@ -146,7 +175,9 @@ extension ClientDetailsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         let invoice = viewModel.invoices[indexPath.row]
 
         onInvoiceSelected?(invoice)

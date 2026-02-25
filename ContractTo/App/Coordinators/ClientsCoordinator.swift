@@ -14,12 +14,14 @@ final class ClientsCoordinator: Coordinator {
     
     private let clientRepository: ClientRepository
     private let invoiceRepository: InvoiceRepository
+    private let userProfileRepository: UserProfileRepository
 
 
-    init(navigationController: UINavigationController, clientRepository: ClientRepository, invoiceRepository: InvoiceRepository) {
+    init(navigationController: UINavigationController, clientRepository: ClientRepository, invoiceRepository: InvoiceRepository, userProfileRepository: UserProfileRepository) {
         self.navigationController = navigationController
         self.clientRepository = clientRepository
         self.invoiceRepository = invoiceRepository
+        self.userProfileRepository = userProfileRepository
     }
 
     func start() {
@@ -51,6 +53,10 @@ final class ClientsCoordinator: Coordinator {
             self?.showInvoiceDetails(invoice)
         }
         
+        vc.onCreateInvoiceTapped = { [weak self] client, completion in
+            self?.createInvoice(for: client, completion: completion)
+        }
+        
         vc.title = client.name
         
         navigationController.pushViewController(vc, animated: true)
@@ -66,6 +72,27 @@ final class ClientsCoordinator: Coordinator {
         detailsVC.title = "Invoice #\(invoice.number)"
 
         navigationController.pushViewController(detailsVC, animated: true)
+    }
+    
+    private func createInvoice(for client: Client, completion: @escaping () -> Void) {
+
+        do {
+            let numberUseCase = DefaultGenerateInvoiceNumberUseCase(
+                profileRepository: userProfileRepository
+            )
+
+            let number = try numberUseCase.execute()
+
+            try invoiceRepository.createInvoice(
+                for: client.id,
+                number: number
+            )
+
+            completion()
+
+        } catch {
+            print("❌ Failed to create invoice")
+        }
     }
     
 }
