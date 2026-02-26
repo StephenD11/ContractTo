@@ -21,6 +21,9 @@ final class InvoiceDetailsViewController: BaseViewController {
     private let markSentButton = UIButton(type: .system).forAutoLayout()
     private let markPaidButton = UIButton(type: .system).forAutoLayout()
 
+    var onAddItemTapped: ((@escaping () -> Void) -> Void)?
+    var onItemSelected: ((InvoiceItem, @escaping () -> Void) -> Void)?
+    var onDeleteItem: ((InvoiceItem, @escaping () -> Void) -> Void)?
 
     init(invoice: Invoice, invoiceRepository: InvoiceRepository) {
         self.invoice = invoice
@@ -51,10 +54,16 @@ final class InvoiceDetailsViewController: BaseViewController {
     private func refresh() {
         viewModel.loadItems()
         tableView.reloadData()
-        
+        updateHeader()
+        updateStatusUI()           
+    }
+    
+    private func updateHeader() {
+        totalLabel.text = "Total: \(formatCurrency(viewModel.totalAmount))"
+    }
+    
+    private func updateStatusUI() {
         statusLabel.text = "Status: \(invoice.computedStatus.rawValue.capitalized)"
-        totalLabel.text = "Total: \(viewModel.subtotal)"
-
     }
     
     override func setupViews() {
@@ -123,14 +132,9 @@ final class InvoiceDetailsViewController: BaseViewController {
     }
     
     @objc private func addItemTapped() {
-
-        viewModel.addItem(
-            title: "Service",
-            quantity: 1,
-            unitPrice: 100
-        )
-
-        refresh()
+        onAddItemTapped? { [weak self] in
+            self?.refresh()
+        }
     }
         
     @objc private func markSent() {
@@ -169,5 +173,28 @@ extension InvoiceDetailsViewController: UITableViewDataSource, UITableViewDelega
         
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let item = viewModel.items[indexPath.row]
+        
+        
+        onItemSelected?(item) { [weak self] in
+            self?.refresh()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        guard editingStyle == .delete else { return }
+
+        let item = viewModel.items[indexPath.row]
+
+        onDeleteItem?(item) { [weak self] in
+            self?.refresh()
+        }
     }
 }

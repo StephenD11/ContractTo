@@ -47,6 +47,18 @@ final class InvoicesCoordinator: Coordinator {
                                                          invoiceRepository: invoiceRepository)
         
         detailsVC.title = "Invoice #\(invoice.number)"
+        
+        detailsVC.onAddItemTapped = { [weak self] completion in
+            self?.showAddItem(invoice: invoice, completion: completion)
+        }
+        
+        detailsVC.onItemSelected = { [weak self] item, completion in
+            self?.showEditItem(item: item, completion: completion)
+        }
+        
+        detailsVC.onDeleteItem = { [weak self] item, completion in
+            self?.deleteItem(item, completion: completion)
+        }
 
         navigationController.pushViewController(detailsVC, animated: true)
     }
@@ -82,13 +94,82 @@ final class InvoicesCoordinator: Coordinator {
 
             navigationController.popViewController(animated: true)
             
-//            // MARK: Лишний refresh() оставляю на всякий случай
-//            if let invoicesVC = navigationController.viewControllers.first as? InvoicesViewController {
-//                invoicesVC.refresh()
-//            }
 
         } catch {
             print("❌ Failed to create invoice")
+        }
+    }
+    
+    private func showAddItem(invoice: Invoice,
+                             completion: @escaping () -> Void) {
+
+        let formVC = ItemFormViewController(item: nil)
+        formVC.title = "New Item"
+
+        formVC.onSave = { [weak self] _, title, quantity, price in
+
+            guard let self else { return }
+
+            do {
+                try self.invoiceRepository.addItem(
+                    to: invoice.id,
+                    title: title,
+                    quantity: quantity,
+                    unitPrice: price
+                )
+
+                self.navigationController.popViewController(animated: true)
+
+                completion()
+
+            } catch {
+                print("❌ Failed to add item")
+            }
+        }
+
+        navigationController.pushViewController(formVC, animated: true)
+    }
+    
+    private func showEditItem(item: InvoiceItem,
+                              completion: @escaping () -> Void) {
+
+        let formVC = ItemFormViewController(item: item)
+        formVC.title = "Edit Item"
+
+        formVC.onSave = { [weak self] item, title, quantity, price in
+
+            guard let self, let item else { return }
+
+            do {
+                try self.invoiceRepository.updateItem(
+                    id: item.id,
+                    title: title,
+                    quantity: quantity,
+                    unitPrice: price
+                )
+
+                self.navigationController.popViewController(animated: true)
+
+                completion()
+
+            } catch {
+                print("❌ Failed to update item")
+            }
+        }
+
+        navigationController.pushViewController(formVC, animated: true)
+    }
+    
+    private func deleteItem(_ item: InvoiceItem,
+                            completion: @escaping () -> Void) {
+
+        do {
+            try invoiceRepository.deleteItem(id: item.id)
+
+            completion()
+
+        } catch {
+            print("❌ Failed to delete item")
         }
     }
 }

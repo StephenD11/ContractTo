@@ -19,8 +19,16 @@ final class ClientDetailsViewController: BaseViewController {
     private let invoicesCountLabel = UILabel().forAutoLayout()
     private let totalAmountLabel = UILabel().forAutoLayout()
     
+    private let editButton = UIButton(type: .system)
+    
+    
+    
     var onInvoiceSelected: ((Invoice) -> Void)?
     var onCreateInvoiceTapped: ((Client, @escaping () -> Void) -> Void)?
+    var onEditClientTapped: ((Client) -> Void)?
+    var onClientUpdated: (() -> Void)?
+    var onDeleteClientTapped: ((Client) -> Void)?
+    var onDeleteInvoice: ((Invoice, @escaping () -> Void) -> Void)?
     
     
     private let createInvoiceButton = UIButton(type: .system).forAutoLayout()
@@ -39,6 +47,7 @@ final class ClientDetailsViewController: BaseViewController {
         super.viewWillAppear(animated)
 
         viewModel.load()
+        title = viewModel.client.name
         
         nameLabel.text = viewModel.client.name
         emailLabel.text = viewModel.client.email ?? "No email"
@@ -51,7 +60,7 @@ final class ClientDetailsViewController: BaseViewController {
         
         invoicesCountLabel.text = "Invoices: \(viewModel.invoicesCount)"
         totalAmountLabel.text = "Total: \(formatCurrency(viewModel.totalAmount))"
-
+        
         
         tableView.reloadData()
     }
@@ -83,9 +92,20 @@ final class ClientDetailsViewController: BaseViewController {
         
         createInvoiceButton.setTitle("Create Invoice", for: .normal)
         createInvoiceButton.titleLabel?.font = DS.Typography.title()
-        
         createInvoiceButton.addTarget(self, action: #selector(createInvoiceTapped), for: .touchUpInside)
         
+        editButton.setTitle("Edit", for: .normal)
+        editButton.addTarget(self, action: #selector(editTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+        
+        let deleteItem = UIBarButtonItem(
+            title: "Delete",
+            style: .plain,
+            target: self,
+            action: #selector(deleteTapped)
+        )
+        
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(customView: editButton), deleteItem]
         
         view.addSubview(headerView)
         view.addSubview(tableView)
@@ -130,14 +150,7 @@ final class ClientDetailsViewController: BaseViewController {
         ])
     }
     
-    private func formatCurrency(_ value: Double) -> String {
 
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
-    }
     
     @objc private func createInvoiceTapped() {
         onCreateInvoiceTapped?(viewModel.client, { [weak self] in
@@ -145,11 +158,18 @@ final class ClientDetailsViewController: BaseViewController {
         })
     }
     
+    @objc private func editTapped() {
+        onEditClientTapped?(viewModel.client)
+    }
+    
+    @objc private func deleteTapped() {
+        onDeleteClientTapped?(viewModel.client)
+    }
+    
     private func reloadScreen() {
         viewModel.load()
         tableView.reloadData()
 
-        // если у тебя метрики на экране есть:
         invoicesCountLabel.text = "Invoices: \(viewModel.invoicesCount)"
         totalAmountLabel.text = "Total: \(formatCurrency(viewModel.totalAmount))"
     }
@@ -183,5 +203,15 @@ extension ClientDetailsViewController: UITableViewDataSource, UITableViewDelegat
         onInvoiceSelected?(invoice)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+        guard editingStyle == .delete else { return }
+
+        let invoice = viewModel.invoices[indexPath.row]
+
+        onDeleteInvoice?(invoice) { [weak self] in
+            self?.reloadScreen()
+        }
+    }
 }
 

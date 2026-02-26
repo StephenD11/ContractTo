@@ -55,4 +55,19 @@ final class CoreDataClientRepository : ClientRepository {
             try context.save()
         }
     }
+    
+    func updateClient(id: UUID, name: String, email: String?) throws {
+        
+        let request: NSFetchRequest<CDClient> = CDClient.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        guard let cdClient = try context.fetch(request).first else {
+            throw NSError(domain: "ClientNotFound", code: 404)
+        }
+        
+        cdClient.name = name
+        cdClient.email = email
+        
+        try context.save()
+    }
 }

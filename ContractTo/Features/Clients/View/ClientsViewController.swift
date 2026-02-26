@@ -34,6 +34,11 @@ final class ClientsViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadClients()
+        tableView.reloadData()
+    }
     
     override func setupViews() {
         super.setupViews()

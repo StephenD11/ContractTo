@@ -21,5 +21,9 @@ protocol InvoiceRepository {
     
     func fetchItems(for invoiceId : UUID) throws -> [InvoiceItem]
     
+    func updateItem(id: UUID, title: String, quantity: Double, unitPrice: Double) throws
+    
+    func deleteItem(id: UUID) throws
+    
 }
 

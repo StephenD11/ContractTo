@@ -14,4 +14,6 @@ protocol ClientRepository {
     func fetchClients() throws -> [Client]
     
     func deleteClient(id: UUID) throws
+    
+    func updateClient(id: UUID, name: String, email: String?) throws
 }

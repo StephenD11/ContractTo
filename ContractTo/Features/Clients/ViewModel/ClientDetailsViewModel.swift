@@ -22,15 +22,22 @@ final class ClientDetailsViewModel:ClientDetailsViewModelProtocol {
     
     private let invoiceRepository: InvoiceRepository
     private let calculateTotalUseCase: CalculateInvoiceTotalUseCase
+    private let clientRepository: ClientRepository
     
-    let client: Client
+    private let clientId: UUID
+    private(set) var client: Client
     private(set) var invoices: [Invoice] = []
     
+
+    
     init(client: Client,
+         clientRepository: ClientRepository,
          invoiceRepository: InvoiceRepository,
          calculateTotalUseCase: CalculateInvoiceTotalUseCase) {
 
+        self.clientId = client.id
         self.client = client
+        self.clientRepository = clientRepository
         self.invoiceRepository = invoiceRepository
         self.calculateTotalUseCase = calculateTotalUseCase
     }
@@ -38,9 +45,13 @@ final class ClientDetailsViewModel:ClientDetailsViewModelProtocol {
     func load() {
         
         do {
+            let clients = try clientRepository.fetchClients()
+            if let updated = clients.first(where: { $0.id == clientId }) {
+                client = updated
+            }
+
             let allInvoices = try invoiceRepository.fetchInvoices()
-            
-            invoices = allInvoices.filter { inv in return inv.clientId == client.id }
+            invoices = allInvoices.filter { $0.clientId == clientId }
             
         } catch {
             print("❌ Failed to load client invoices")

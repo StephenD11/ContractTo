@@ -118,4 +118,37 @@ final class CoreDataInvoiceRepository: InvoiceRepository {
         )}
     }
     
+    func updateItem(id: UUID,
+                    title: String,
+                    quantity: Double,
+                    unitPrice: Double) throws {
+
+        let request: NSFetchRequest<CDInvoiceItem> = CDInvoiceItem.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        guard let cdItem = try context.fetch(request).first else {
+            throw NSError(domain: "ItemNotFound", code: 404)
+        }
+
+        cdItem.title = title
+        cdItem.quantity = quantity
+        cdItem.unitPrice = unitPrice
+
+        try context.save()
+    }
+    
+    func deleteItem(id: UUID) throws {
+
+        let request: NSFetchRequest<CDInvoiceItem> = CDInvoiceItem.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        guard let item = try context.fetch(request).first else {
+            throw NSError(domain: "ItemNotFound", code: 404)
+        }
+
+        context.delete(item)
+
+        try context.save()
+    }
+    
 }
